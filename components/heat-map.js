@@ -110,7 +110,7 @@ export default class Heatmap extends React.Component {
         if (loading) return <div />
         if (error) return <pre>{error}</pre>
         if (!data.facets) {
-          console.log("Bad result", query, error, data)
+          console.warn("Query must have at least one FACET", query, error, data)
           return <div/>
         }
   
@@ -147,7 +147,7 @@ function Node(props) {
 }
 
 function SingleHeatmap(props) {
-  const { title, selection, onSelect, data, max, onClickTitle, showLegend } = props
+  const { title, selection, onSelect, data, onClickTitle, showLegend } = props
 
   const titleStyle = `title ${onClickTitle && "clickable"}`
   return <div className="heat-map">
@@ -178,7 +178,7 @@ function GroupedHeatMap(props) {
   return <div>
     {groupNames.map(groupName => {
       const group = groups[groupName]
-      return <SingleHeatmap {...props} data={group} title={groupName}/>
+      return <SingleHeatmap key={groupName} {...props} data={group} title={groupName}/>
     })}
   </div>
 }
